@@ -1,5 +1,5 @@
 ########################################################################
-# Prediction of response to 90 targeted and cytotoxic agents based on	 #
+# Prediction of response to 90 targeted and cytotoxic agents based on  #
 # gene expression data, methylation data and/or copy number data       #
 #                                                                      #
 # Copyright 2012 Anneleen Daemen, Obi Griffith, Laura Heiser           #
