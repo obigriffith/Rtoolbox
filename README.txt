@@ -1,9 +1,9 @@
-#######################################################################
-# Prediction of response to 90 targeted and cytotoxic agents based on	#
-# gene expression data, methylation data and/or copy number data      #
-#                                                                     #
-# Copyright 2012 Anneleen Daemen, Obi Griffith, Laura Heiser          #
-#######################################################################
+########################################################################
+# Prediction of response to 90 targeted and cytotoxic agents based on	 #
+# gene expression data, methylation data and/or copy number data       #
+#                                                                      #
+# Copyright 2012 Anneleen Daemen, Obi Griffith, Laura Heiser           #
+########################################################################
 
 We provide an R script through which the list of 90 drug compounds is ranked for a patient according to predicted drug response based on gene expression, copy number and/or methylation data, upon availability for that patient. Best results are expected if data are provided from platforms used for the cell line data, based on which the classifiers were built (that is, Affymetrix's GeneChip Human Genome U133A and Genome-Wide Human SNP Array 6.0 for expression and copy number data, respectively, and Illumina's Infinium HumanMethylation BeadChip for methylation). In that case, use R script DrugResponseToolboxPlatformSpecific.R. The input files per patient should be one or more of the following: U133A CEL-file, SNP6 CEL-file, and a tab-delimited file with the proportion of methylated DNA at each measured CpG locus. The U133A CEL-file is preprocessed with the U133A CEL-files of the 48 core cell lines, whilst the SNP6 CEL-file is segmented using the same breakpoints as obtained in the cell line panel. Predicted response for each patient is provided for those compounds with AUC>0.6 for the best cell line-derived predictor based on any or all of the input data.
 
