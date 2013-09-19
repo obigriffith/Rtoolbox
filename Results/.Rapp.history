@@ -1,0 +1,865 @@
+U133AData
+class(U133AData)
+U133AData[1,1]
+U133AData[1,1]+1
+Affyfile2='/users/adaemen/Projects/Statin/U133AData_SubtypeSpecific15GeneList_data.txt'#
+RMA_data_affy2=read.table(Affyfile2, header=TRUE, na.strings = "NA", sep="\t")#
+Subtype=RMA_data_affy2[1,]
+Subtype
+Affyfile2='/users/adaemen/Projects/Statin/U133AData_SubtypeSpecific15GeneList_subtype.txt'#
+RMA_data_affy2=read.table(Affyfile2, header=TRUE, na.strings = "NA", sep="\t")#
+Subtype=RMA_data_affy2[1,]
+Affyfile2='/users/adaemen/Projects/Statin/U133AData_SubtypeSpecific15GeneList_subtypes.txt'#
+RMA_data_affy2=read.table(Affyfile2, header=TRUE, na.strings = "NA", sep="\t")#
+Subtype=RMA_data_affy2[1,]
+Subtype
+Affyfile2='/users/adaemen/Projects/Statin/U133AData_SubtypeSpecific15GeneList_subtypes.txt'#
+RMA_data_affy2=read.table(Affyfile2, header=TRUE, na.strings = "NA", sep="\t")#
+rownames(RMA_data_affy2)=RMA_data_affy2[,1]#
+RMA_data_affy2=RMA_data_affy2[,-1]#
+Subtype=RMA_data_affy2[1,]
+Subtype
+mydist=function(c) {#
+  dist(c,method="euclidian")#
+}#
+myclust=function(c) { #
+  hclust(c,method="average")#
+}
+patientcolors=mat.or.vec(1,dim(U133AData)[2])#
+patientcolors[which(Subtype=="Luminal")]="blue"#
+patientcolors[which(Subtype=="ERBB2Amp")]="blue"#
+patientcolors[which(Subtype=="Basal")]="red"#
+patientcolors[which(Subtype=="Claudin-low")]="green"
+patientcolors
+patientcolors[which(Subtype=="Unknown")]="gray"
+patientcolors
+heatmap.2(U133AData, hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=patientcolors, col=rev(heat.colors(100)))#
+legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)
+heatmap.2(as.matrix(U133AData), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=patientcolors, col=rev(heat.colors(100)))#
+legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)
+responsecolors=mat.or.vec(1,dim(U133AData)[2])#
+responsecolors[which(U133AData[1,]>5.1)]="green"#
+responsecolors[which(U133AData[1,]<5.1&U133AData[1,]>4.7)]="red"#
+responsecolors[which(U133AData[1,]<4.7)]="blue"#
+#
+heatmap.2(as.matrix(U133AData), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=responsecolors, col=rev(heat.colors(100)))#
+legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)
+U133AData[1,]
+which(U133AData[1,]>5.1)
+length(which(U133AData[1,]>5.1))
+responsecolors=mat.or.vec(1,dim(U133AData)[2])#
+responsecolors[which(GI50>5.17)]="green"#
+responsecolors[which(GI50<5.17 & GI50>4.7)]="red"#
+responsecolors[which(GI50<4.7)]="blue"#
+#
+heatmap.2(as.matrix(U133AData), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=responsecolors, col=rev(heat.colors(100)))#
+legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)
+legend("topleft", legend=c("Sensitive","Intermediate","Resistant"), fill=c("green","red","blue"), cex=0.9)
+heatmap.2(as.matrix(U133AData), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=responsecolors, col=rev(heat.colors(100)))#
+#legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)#
+legend("topleft", legend=c("Sensitive","Intermediate","Resistant"), fill=c("green","red","blue"), cex=0.9)
+GI50
+Affyfile='/users/adaemen/Projects/Statin/U133AData_SubtypeSpecific15GeneList_data.txt'#
+RMA_data_affy=read.table(Affyfile, header=TRUE, na.strings = "NA", sep="\t")#
+rownames(RMA_data_affy)=RMA_data_affy[,1]#
+RMA_data_affy=RMA_data_affy[,-1]#
+U133AData=RMA_data_affy[-1,]#
+GI50=RMA_data_affy[1,]#
+#
+Affyfile2='/users/adaemen/Projects/Statin/U133AData_SubtypeSpecific15GeneList_subtypes.txt'#
+RMA_data_affy2=read.table(Affyfile2, header=TRUE, na.strings = "NA", sep="\t")#
+rownames(RMA_data_affy2)=RMA_data_affy2[,1]#
+RMA_data_affy2=RMA_data_affy2[,-1]#
+Subtype=RMA_data_affy2[1,]#
+#
+#Define custom dist and hclust functions for use with heatmaps#
+mydist=function(c) {#
+  dist(c,method="euclidian")#
+}#
+myclust=function(c) { #
+  hclust(c,method="average")#
+}#
+#
+# Creation of colorvector#
+patientcolors=mat.or.vec(1,dim(U133AData)[2])#
+patientcolors[which(Subtype=="Luminal")]="blue"#
+patientcolors[which(Subtype=="ERBB2Amp")]="blue"#
+patientcolors[which(Subtype=="Basal")]="red"#
+patientcolors[which(Subtype=="Claudin-low")]="green"#
+patientcolors[which(Subtype=="Unknown")]="gray"#
+#
+responsecolors=mat.or.vec(1,dim(U133AData)[2])#
+responsecolors[which(GI50>5.17)]="green"#
+responsecolors[which(GI50<5.17 & GI50>4.7)]="red"#
+responsecolors[which(GI50<4.7)]="blue"#
+#
+heatmap.2(as.matrix(U133AData), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=responsecolors, col=rev(heat.colors(100)))#
+#legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)#
+legend("topleft", legend=c("Sensitive","Intermediate","Resistant"), fill=c("green","red","blue"), cex=0.9)
+responsecolors=mat.or.vec(1,dim(U133AData)[2])#
+responsecolors[which(GI50>4.955)]="green"#
+responsecolors[which(GI50<4.955)]="blue"#
+#
+heatmap.2(as.matrix(U133AData), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=responsecolors, col=rev(heat.colors(100)))#
+#legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)#
+#legend("topleft", legend=c("Sensitive","Intermediate","Resistant"), fill=c("green","red","blue"), cex=0.9)#
+legend("topleft", legend=c("Sensitive","Resistant"), fill=c("green","blue"), cex=0.9)
+responsecolors=mat.or.vec(1,dim(U133AData)[2])#
+responsecolors[which(GI50>5.17)]="green"#
+responsecolors[which(GI50<5.17 & GI50>4.7)]="red"#
+responsecolors[which(GI50<4.7)]="blue"
+heatmap.2(as.matrix(U133AData), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=responsecolors, col=rev(heat.colors(100)))#
+#legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)#
+legend("topleft", legend=c("Sensitive","Intermediate","Resistant"), fill=c("green","red","blue"), cex=0.9)#
+#legend("topleft", legend=c("Sensitive","Resistant"), fill=c("green","blue"), cex=0.9)
+rownames(U133AData)
+genes=c("KRT15","RARRES3","MAPK13")#
+heatmap.2(as.matrix(U133AData[genes,]), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=responsecolors, col=rev(heat.colors(100)))#
+#legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)#
+legend("topleft", legend=c("Sensitive","Intermediate","Resistant"), fill=c("green","red","blue"), cex=0.9)
+responsecolors=mat.or.vec(1,dim(U133AData)[2])#
+responsecolors[which(GI50>4.955)]="green"#
+responsecolors[which(GI50<4.955)]="blue"
+heatmap.2(as.matrix(U133AData[genes,]), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=responsecolors, col=rev(heat.colors(100)))#
+legend("topleft", legend=c("Luminal","Basal","Claudin-low"), fill=c("blue","red","green"), cex=0.9)
+q()
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072","#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=6.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes.pdf")#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()
+getwd()
+pdf(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes.pdf")#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072","#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP8" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP13" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_p
+roteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP8" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP13" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=6.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12","MMP8","MMP13"), fill=colors, cex=0.9)#
+dev.off()#
+#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes.png")#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()
+jpeg(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes.jpeg",width=600,height=800,quality=100,pointsize=250)#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()
+jpeg(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes.jpeg",width=300,height=400,quality=100,pointsize=250)#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()
+jpeg(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes.jpeg",width=100,height=200,quality=100,pointsize=250)#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors),names=c("NKG2D/CD8","NKG2D/CD8"), xlab="Treatment", ylab="log2 expression")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD8.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors),names=c("NKG2D/CD8","NKG2D/CD8"), xlab="Treatment", ylab="log2 expression")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)#
+dev.off()
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD94_1" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD94_1" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors),names=c("NKG2D/CD94_1","NKG2D/CD94_1"), xlab="Treatment", ylab="log2 expression")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD94_1"), fill=colors, cex=0.9)
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD94_1.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD94_1" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD94_1" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors),names=c("NKG2D/CD94_1","NKG2D/CD94_1"), xlab="Treatment", ylab="log2 expression")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD94_1"), fill=colors, cex=0.9)#
+dev.off()
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD94_2.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD94_2" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD94_2" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors),names=c("NKG2D/CD94_2","NKG2D/CD94_2"), xlab="Treatment", ylab="log2 expression")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD94_2"), fill=colors, cex=0.9)#
+dev.off()#
+#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD94_3.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD94_3" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD94_3" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors),names=c("NKG2D/CD94_3","NKG2D/CD94_3"), xlab="Treatment", ylab="log2 expression")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD94_3"), fill=colors, cex=0.9)#
+dev.off()
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD8_nolabel.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors),names=c("NKG2D/CD8","NKG2D/CD8"), xlab="Treatment")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)#
+dev.off()#
+#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD8_withlabel.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors),names=c("NKG2D/CD8","NKG2D/CD8"), xlab="Treatment", ylab="log2 expression")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)#
+dev.off()
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_LigandGenes_nolabel.png")#
+Expression_ligand="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Ligands.csv"#
+Expression_ligand_data=read.table(Expression_ligand, header=TRUE, sep=",")#
+colors=c("#000080","#27408B","#4A708B","#6CA6CD")#
+boxplot(Expression_ligand_data[which(Expression_ligand_data[,1]=="MICA" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICB" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP1" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP2" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICA" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICB" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP1" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP2" & Expression_ligand_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MICA","MICB","ULBP1","ULBP2"), fill=colors, cex=0.9)#
+dev.off()#
+#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_LigandGenes_withlabel.png")#
+Expression_ligand="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Ligands.csv"#
+Expression_ligand_data=read.table(Expression_ligand, header=TRUE, sep=",")#
+colors=c("#000080","#27408B","#4A708B","#6CA6CD")#
+boxplot(Expression_ligand_data[which(Expression_ligand_data[,1]=="MICA" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICB" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP1" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP2" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICA" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICB" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP1" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP2" & Expression_ligand_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MICA","MICB","ULBP1","ULBP2"), fill=colors, cex=0.9)#
+dev.off()
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes_nolabel.png")#,width=100,height=200,quality=100,pointsize=250)#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()#
+#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes_withlabel.png")#,width=100,height=200,quality=100,pointsize=250)#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()
+q()
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD8_nolabel.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)#
+dev.off()#
+#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD8_withlabel.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)#
+dev.off()
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD8_withlabel.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors), ylab="log2 expression ratio")#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)#
+dev.off()
+q()
+library('made4')#
+library('gplots')#
+#
+### BCCL expression data#
+Affyfile='/users/adaemen/Drug_predictors/TumorData/HDAC/BCCL_LBH589_30genes_UG_RMA_cu.csv'#
+BCCL_input=read.table(Affyfile, header=TRUE, na.strings = "NA", sep=",")#
+rownames(BCCL_input)=BCCL_input[,1]#
+BCCL_input=BCCL_input[,-1]#
+BCCL_data=BCCL_input[-1,]#
+BCCL_response=BCCL_input[1,]#
+#
+### Tumor samples expression data#
+Affyfile='/users/adaemen/Drug_predictors/TumorData/HDAC/TumorData3D_LBH589_30genes_UG_RMA_cu.csv'#
+Tumor_input=read.table(Affyfile, header=TRUE, na.strings = "NA", sep=",")#
+rownames(Tumor_input)=Tumor_input[,1]#
+Tumor_input=Tumor_input[,-1]#
+Tumor_data=Tumor_input[-1,]#
+Tumor_response=Tumor_input[1,]#
+#
+#Define custom dist and hclust functions for use with heatmaps#
+mydist=function(c) {#
+  dist(c,method="euclidian")#
+}#
+myclust=function(c) { #
+  hclust(c,method="average")#
+}#
+#
+# Creation of colorvector#
+BCCLcolors=mat.or.vec(1,length(BCCL_response))#
+BCCLcolors[which(BCCL_response==0)]="blue"#
+BCCLcolors[which(BCCL_response==1)]="red"#
+#
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("topleft", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(topo.colors(100)))#
+legend("topleft", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(topo.colors(75)))#
+legend("topleft", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+Tumorcolors=mat.or.vec(1,length(Tumor_response))#
+Tumorcolors[which(Tumor_response==0)]="blue"#
+Tumorcolors[which(Tumor_response==1)]="red"#
+#
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=Tumorcolors, col=rev(topo.colors(75)))#
+legend("topleft", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=Tumorcolors, col=rev(heat.colors(75)))#
+legend("topleft", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("topleft", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("topleft", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("topright", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("top", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("bottomleft", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+?heatmap.2
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+png(file="/users/adaemen/Drug_predictors/TumorData/HDAC/Heatmap_BCCL_LBH589_30genes.png")#
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)#
+dev.off()
+png(file="/users/adaemen/Drug_predictors/TumorData/HDAC/Heatmap_TumorData3D_LBH589_30genes.png")#
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)#
+dev.off()
+pdf(file="/users/adaemen/Drug_predictors/TumorData/HDAC/Heatmap_BCCL_LBH589_30genes.pdf")#
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)#
+dev.off()
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, labCol=NULL, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(5,5), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(15,5), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(8,5), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(6,5), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,6), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(6,6), ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+png(file="/users/adaemen/Drug_predictors/TumorData/HDAC/Heatmap_BCCL_LBH589_30genes.png")#
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(6,6), ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)#
+dev.off()
+png(file="/users/adaemen/Drug_predictors/TumorData/HDAC/Heatmap_TumorData3D_LBH589_30genes.png")#
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,6), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)#
+dev.off()
+Affyfile='/users/adaemen/Drug_predictors/TumorData/HDAC/BCCL_SAHA (Vorinostat)_150genes_UG_RMA_cu.csv'#
+BCCL_input=read.table(Affyfile, header=TRUE, na.strings = "NA", sep=",")#
+rownames(BCCL_input)=BCCL_input[,1]#
+BCCL_input=BCCL_input[,-1]#
+BCCL_data=BCCL_input[-1,]#
+BCCL_response=BCCL_input[1,]#
+#
+### Tumor samples expression data#
+Affyfile='/users/adaemen/Drug_predictors/TumorData/HDAC/TumorData3D_SAHA (Vorinostat)_150genes_UG_RMA_cu.csv'#
+Tumor_input=read.table(Affyfile, header=TRUE, na.strings = "NA", sep=",")#
+rownames(Tumor_input)=Tumor_input[,1]#
+Tumor_input=Tumor_input[,-1]#
+Tumor_data=Tumor_input[-1,]#
+Tumor_response=Tumor_input[1,]
+Affyfile='/users/adaemen/Drug_predictors/TumorData/HDAC/BCCL_Vorinostat_150genes_UG_RMA_cu.csv'#
+BCCL_input=read.table(Affyfile, header=TRUE, na.strings = "NA", sep=",")#
+rownames(BCCL_input)=BCCL_input[,1]#
+BCCL_input=BCCL_input[,-1]#
+BCCL_data=BCCL_input[-1,]#
+BCCL_response=BCCL_input[1,]#
+#
+### Tumor samples expression data#
+Affyfile='/users/adaemen/Drug_predictors/TumorData/HDAC/TumorData3D_Vorinostat_150genes_UG_RMA_cu.csv'#
+Tumor_input=read.table(Affyfile, header=TRUE, na.strings = "NA", sep=",")#
+rownames(Tumor_input)=Tumor_input[,1]#
+Tumor_input=Tumor_input[,-1]#
+Tumor_data=Tumor_input[-1,]#
+Tumor_response=Tumor_input[1,]
+Affyfile='/users/adaemen/Drug_predictors/TumorData/HDAC/BCCL_Vorinostat_150genes_UG_GCRMA_cu.csv'#
+BCCL_input=read.table(Affyfile, header=TRUE, na.strings = "NA", sep=",")#
+rownames(BCCL_input)=BCCL_input[,1]#
+BCCL_input=BCCL_input[,-1]#
+BCCL_data=BCCL_input[-1,]#
+BCCL_response=BCCL_input[1,]#
+#
+### Tumor samples expression data#
+Affyfile='/users/adaemen/Drug_predictors/TumorData/HDAC/TumorData3D_Vorinostat_150genes_UG_GCRMA_cu.csv'#
+Tumor_input=read.table(Affyfile, header=TRUE, na.strings = "NA", sep=",")#
+rownames(Tumor_input)=Tumor_input[,1]#
+Tumor_input=Tumor_input[,-1]#
+Tumor_data=Tumor_input[-1,]#
+Tumor_response=Tumor_input[1,]
+BCCLcolors=mat.or.vec(1,length(BCCL_response))#
+BCCLcolors[which(BCCL_response==0)]="blue"#
+BCCLcolors[which(BCCL_response==1)]="red"
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(6,6), ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+Tumorcolors=mat.or.vec(1,length(Tumor_response))#
+Tumorcolors[which(Tumor_response==0)]="blue"#
+Tumorcolors[which(Tumor_response==1)]="red"
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,6), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,6), labRow=NULL, ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,6), labRow=NULL, labCol=NULL, ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+DummyData=Tumor_data#
+rownames(DummyData)=NULL
+heatmap.2(as.matrix(DummyData), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,6), labRow=NULL, labCol=NULL, ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,1), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,0), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,0.2), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(6,0.2), ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)
+png(file="/users/adaemen/Drug_predictors/TumorData/HDAC/Heatmap_BCCL_Vorinostat_150genes.png")#
+heatmap.2(as.matrix(BCCL_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(6,0.2), ColSideColors=BCCLcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)#
+dev.off()#
+#
+#
+Tumorcolors=mat.or.vec(1,length(Tumor_response))#
+Tumorcolors[which(Tumor_response==0)]="blue"#
+Tumorcolors[which(Tumor_response==1)]="red"#
+#
+png(file="/users/adaemen/Drug_predictors/TumorData/HDAC/Heatmap_TumorData3D_Vorinostat_150genes.png")#
+heatmap.2(as.matrix(Tumor_data), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, dendrogram="column", density.info="none", trace="none", margins=c(7,0.2), ColSideColors=Tumorcolors, col=rev(heat.colors(100)))#
+legend("left", legend=c("Sensitive","Resistant"), fill=c("red","blue"), cex=0.9)#
+dev.off()
+q()
+combined_data_U133A="/users/adaemen/Projects/LigandProtease_JPC/Breast/CombinedFileV2_RMA_U133A.txt"#
+raw_combined_data_U133A=read.table(combined_data_U133A, header=TRUE, na.strings = "NA", sep="\t")#
+rownames(raw_combined_data_U133A)=raw_combined_data_U133A[,1]#
+raw_combined_data_U133A=raw_combined_data_U133A[,-1]#
+#
+sample_annotation_U133A="/users/adaemen/Projects/LigandProtease_JPC/Breast/CombinedFileV2_RMA_U133A_SampleAnnotation.txt"#
+raw_sample_annotation_U133A=read.table(sample_annotation_U133A, header=TRUE, na.strings = "NA", sep="\t")#
+#
+### Probe filtering#
+### 1) Minimum 20% samples with > 100 raw value (=6.6439 at log2 scale)#
+### 2) 0.7 < COV < 10#
+#
+unlog_combined_data_U133A=exp(raw_combined_data_U133A*log(2))#
+sd_genes=sd(t(unlog_combined_data_U133A))#
+mean_genes=rowMeans(unlog_combined_data_U133A)#
+COV_genes=sd_genes/mean_genes#
+indicesCOV=which(COV_genes>0.7 & COV_genes<10)#
+COV_combined_data_U133A=raw_combined_data_U133A[indicesCOV,]#
+#
+indicesBkg=which(COV_combined_data_U133A>6.6439)#
+Bkg_matrix=mat.or.vec(dim(COV_combined_data_U133A)[1],dim(COV_combined_data_U133A)[2])#
+Bkg_matrix[indicesBkg]=1#
+NbAboveBkg=rowSums(Bkg_matrix)#
+indicesBkg2=which(NbAboveBkg>=0.20*dim(COV_combined_data_U133A)[2])#
+COV_Bkg_combined_data_U133A=COV_combined_data_U133A[indicesBkg2,]
+dim(COV_Bkg_combined_data_U133A)
+q()
+combined_data_U133A="/users/adaemen/Projects/LigandProtease_JPC/Breast/CombinedFileV2_RMA_U133A.txt"#
+raw_combined_data_U133A=read.table(combined_data_U133A, header=TRUE, na.strings = "NA", sep="\t")#
+rownames(raw_combined_data_U133A)=raw_combined_data_U133A[,1]#
+raw_combined_data_U133A=raw_combined_data_U133A[,-1]#
+#
+sample_annotation_U133A="/users/adaemen/Projects/LigandProtease_JPC/Breast/CombinedFileV2_RMA_U133A_SampleAnnotation.txt"#
+raw_sample_annotation_U133A=read.table(sample_annotation_U133A, header=TRUE, na.strings = "NA", sep="\t")
+unlog_combined_data_U133A=exp(raw_combined_data_U133A*log(2))
+sd_genes=sd(t(unlog_combined_data_U133A))
+dim(sd_genes)
+q()
+combined_data_U133A="/users/adaemen/Projects/LigandProtease_JPC/Breast/CombinedFileV2_RMA_U133A_filtered.txt"#
+raw_combined_data_U133A=read.table(combined_data_U133A, header=TRUE, na.strings = "NA", sep="\t")#
+rownames(raw_combined_data_U133A)=raw_combined_data_U133A[,1]#
+raw_combined_data_U133A=raw_combined_data_U133A[,-1]#
+#
+sample_annotation_U133A="/users/adaemen/Projects/LigandProtease_JPC/Breast/CombinedFileV2_RMA_U133A_SampleAnnotation.txt"#
+raw_sample_annotation_U133A=read.table(sample_annotation_U133A, header=TRUE, na.strings = "NA", sep="\t")
+combined_data_U133A="/users/adaemen/Projects/LigandProtease_JPC/Breast/CombinedFileV2_RMA_U133A_filtered.csv"#
+raw_combined_data_U133A=read.table(combined_data_U133A, header=TRUE, na.strings = "NA", sep=",")#
+rownames(raw_combined_data_U133A)=raw_combined_data_U133A[,1]#
+raw_combined_data_U133A=raw_combined_data_U133A[,-1]
+sample_annotation_U133A="/users/adaemen/Projects/LigandProtease_JPC/Breast/CombinedFileV2_RMA_U133A_SampleAnnotation.txt"#
+raw_sample_annotation_U133A=read.table(sample_annotation_U133A, header=TRUE, na.strings = "NA", sep="\t")#
+#
+#Define custom dist and hclust functions for use with heatmaps#
+mydist=function(c) {#
+	dist(c,method="euclidian")#
+}#
+myclust=function(c) { #
+	hclust(c,method="average")#
+}#
+#
+# Creation of colorvector#
+patientcolors=mat.or.vec(1,dim(raw_combined_data_U133A)[2])#
+patientcolors[which(raw_sample_annotation_U133A[1,]=="GSE23988")]="green"#
+patientcolors[which(raw_sample_annotation_U133A[1,]=="GSE20194")]="red"#
+patientcolors[which(raw_sample_annotation_U133A[1,]=="GSE17705")]="blue"#
+patientcolors[which(raw_sample_annotation_U133A[1,]=="GSE2034")]="yellow"#
+patientcolors[which(raw_sample_annotation_U133A[1,]=="ETABM43")]="black"#
+#
+library("gplots")#
+heatmap.2(as.matrix(raw_combined_data_U133A), hclustfun=myclust, distfun=mydist, na.rm = TRUE, scale="none", symbreaks=FALSE, key=TRUE, symkey=FALSE, density.info="none", trace="none", ColSideColors=as.vector(patientcolors), col=rev(heat.colors(100)))
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_LigandGenes_noFNA_nolabel.png")#
+Expression_ligand="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_noFNA_Ligands.csv"#
+Expression_ligand_data=read.table(Expression_ligand, header=TRUE, sep=",")#
+colors=c("#000080","#27408B","#4A708B","#6CA6CD")#
+boxplot(Expression_ligand_data[which(Expression_ligand_data[,1]=="MICA" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICB" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP1" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP2" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICA" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICB" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP1" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP2" & Expression_ligand_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MICA","MICB","ULBP1","ULBP2"), fill=colors, cex=0.9)#
+dev.off()#
+#
+#
+#Proteases#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes_noFNA_nolabel.png")#,width=100,height=200,quality=100,pointsize=250)#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_noFNA_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()#
+#
+#Receptor#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD8_noFNA_nolabel.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_noFNA_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)#
+dev.off()
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_LigandGenes_all_nolabel.png")#
+Expression_ligand="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_all_Ligands.csv"#
+Expression_ligand_data=read.table(Expression_ligand, header=TRUE, sep=",")#
+colors=c("#000080","#27408B","#4A708B","#6CA6CD")#
+boxplot(Expression_ligand_data[which(Expression_ligand_data[,1]=="MICA" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICB" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP1" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP2" & Expression_ligand_data[,2]=="Before"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICA" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="MICB" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP1" & Expression_ligand_data[,2]=="After"),3],Expression_ligand_data[which(Expression_ligand_data[,1]=="ULBP2" & Expression_ligand_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MICA","MICB","ULBP1","ULBP2"), fill=colors, cex=0.9)#
+dev.off()#
+#
+#
+#Proteases#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ProteaseGenes_all_nolabel.png")#,width=100,height=200,quality=100,pointsize=250)#
+Expression_proteases="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_all_Proteases.csv"#
+Expression_proteases_data=read.table(Expression_proteases, header=TRUE, sep=",")#
+colors=c("#8B2323","#CD3333","#FF4040","#FA8072")#,"#FFA07A","#EECBAD")#
+boxplot(Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="Before"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP1" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP3" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP10" & Expression_proteases_data[,2]=="After"),3],Expression_proteases_data[which(Expression_proteases_data[,1]=="MMP12" & Expression_proteases_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=4.5, lwd=2, col="#777777")#
+legend("topright", legend=c("MMP1","MMP3","MMP10","MMP12"), fill=colors, cex=0.9)#
+dev.off()#
+#
+#Receptor#
+png(file="/users/adaemen/Projects/LigandProtease_JPC/Figures/Breast_ReceptorGene_CD8_all_nolabel.png")#
+Expression_receptor="/users/adaemen/Projects/LigandProtease_JPC/Breast/Boxplot_GeneExpression_all_NormalizedReceptor.csv"#
+Expression_receptor_data=read.table(Expression_receptor, header=TRUE, sep=",")#
+colors="#4A766E"#
+boxplot(Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="Before"),3],Expression_receptor_data[which(Expression_receptor_data[,1]=="NKG2D/CD8" & Expression_receptor_data[,2]=="After"),3],col=c(colors,colors))#
+abline(v=1.5, lwd=2, col="#777777")#
+legend("topright", legend=c("NKG2D/CD8"), fill=colors, cex=0.9)#
+dev.off()
+q()
+alleles <- matrix(c(207, 72, 5, 33, 3, 0), nr=3)
+alleles
+fisher.exact(alleles)
+fisher.test(alleles)
+alleles <- matrix(c(193, 24, 67, 25, 2, 9), nr=3)
+alleles
+fisher.test(alleles)
+alleles <- matrix(c(272, 12, 36, 0), nr=2)
+alleles
+fisher.test(alleles)
+alleles <- matrix(c(209, 75, 31, 5), nr=2)
+alleles
+fisher.test(alleles)
+chisq.test(alleles)
+alleles <- matrix(c(251, 33, 30, 6), nr=2)
+alleles
+fisher.test(alleles)
+chisq.test(alleles)
+alleles <- matrix(c(246, 38, 34, 2), nr=2)
+fisher.test(alleles)
+alleles <- matrix(c(249, 35, 31, 5), nr=2)
+fisher.test(alleles)
+alleles <- matrix(c(256, 28, 322, 14), nr=2)
+fisher.test(alleles)
+chisq.test(alleles)
+alleles <- matrix(c(204, 64, 16, 23, 12, 1), nr=3)
+alleles
+fisher.test(alleles)
+alleles <- matrix(c(271, 11, 2, 34, 0, 2), nr=3)
+alleles
+fisher.test(alleles)
+alleles <- matrix(c(271, 13, 34, 2), nr=3)
+alleles <- matrix(c(271, 13, 34, 2), nr=2)
+alleles
+fisher.test(alleles)
+alleles <- matrix(c(158, 74, 46, 5, 14, 14, 8, 0), nr=4)
+alleles
+fisher.test(alleles)
+alleles <- matrix(c(3,2,4,1,7,1,0,0,46,10,2,4), nr=4)
+alleles
+fisher.test(alleles)
+alleles <- matrix(c(5,4,1,0,5,2,1,0,27,22,10,3), nr=4)
+alleles
+fisher.test(alleles)
+alleles <- matrix(c(6,2,1,0,1,6,0,0,1,1,40,8,3,4,6), nr=5)
+alleles
+fisher.test(alleles)
+q()
+combined_data_U133A="/users/adaemen/Projects/LigandProtease_JPC/Skin/Data_U133A_filtered.csv"#
+raw_combined_data_U133A=read.table(combined_data_U133A, header=TRUE, na.strings = "NA", sep=",")#
+rownames(raw_combined_data_U133A)=raw_combined_data_U133A[,1]#
+raw_combined_data_U133A=raw_combined_data_U133A[,-1]#
+#
+sample_annotation_U133A="/users/adaemen/Projects/LigandProtease_JPC/Skin/Data_U133A_clinical.csv"#
+raw_sample_annotation_U133A=read.table(sample_annotation_U133A, header=TRUE, na.strings = "NA", sep=",")#
+rownames(raw_sample_annotation_U133A)=raw_sample_annotation_U133A[,1]#
+raw_sample_annotation_U133A=raw_sample_annotation_U133A[,-1]
+dim(raw_combined_data_U133A)
+dim(raw_sample_annotation_U133S)
+dim(raw_sample_annotation_U133A)
+mydist=function(c) {#
+	dist(c,method="euclidian")#
+}#
+myclust=function(c) { #
+	hclust(c,method="average")#
+}#
+#
+# Creation of colorvector#
+datacolors=mat.or.vec(1,dim(raw_combined_data_U133A)[2])#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE1133")]="green"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE2361")]="red"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE2503")]="blue"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE3189")]="yellow"#
+#
+tissuecolors=mat.or.vec(1,dim(raw_combined_data_U133A)[2])#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="normal_skin")]="green"#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="Nevus")]="red"#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="Melanoma")]="blue"
+library("gplots")
+heatmap.2(as.matrix(log2(raw_combined_data_U133A)), hclustfun=myclust, distfun=mydist, na.rm = TRUE, symbreaks=FALSE, key=TRUE, symkey=TRUE, density.info="none", trace="none", ColSideColors=datacolors, col=rev(heat.colors(100)))
+heatmap.2(as.matrix(log2(raw_combined_data_U133A)), hclustfun=myclust, distfun=mydist, na.rm = TRUE, symbreaks=FALSE, key=TRUE, symkey=TRUE, density.info="none", trace="none", ColSideColors=tissuecolors, col=rev(heat.colors(100)))
+combined_data_U133A="/users/adaemen/Projects/LigandProtease_JPC/Skin/Data_U133plus2_filtered.csv"#
+raw_combined_data_U133A=read.table(combined_data_U133A, header=TRUE, na.strings = "NA", sep=",")#
+rownames(raw_combined_data_U133A)=raw_combined_data_U133A[,1]#
+raw_combined_data_U133A=raw_combined_data_U133A[,-1]#
+#
+sample_annotation_U133A="/users/adaemen/Projects/LigandProtease_JPC/Skin/Data_U133plus2_clinical.csv"#
+raw_sample_annotation_U133A=read.table(sample_annotation_U133A, header=TRUE, na.strings = "NA", sep=",")#
+rownames(raw_sample_annotation_U133A)=raw_sample_annotation_U133A[,1]#
+raw_sample_annotation_U133A=raw_sample_annotation_U133A[,-1]
+dim(raw_combined_data_U133A)
+dim(raw_sample_annotation_U133A)
+datacolors=mat.or.vec(1,dim(raw_combined_data_U133A)[2])#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE4587")]="green"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE7553")]="red"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE19234")]="blue"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE22138")]="yellow"
+tissuecolors=mat.or.vec(1,dim(raw_combined_data_U133A)[2])#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="normal_skin")]="green"#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="Nevus")]="red"#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="Melanoma")]="blue"
+heatmap.2(as.matrix(log2(raw_combined_data_U133A)), hclustfun=myclust, distfun=mydist, na.rm = TRUE, symbreaks=FALSE, key=TRUE, symkey=TRUE, density.info="none", trace="none", ColSideColors=datacolors, col=rev(heat.colors(100)))
+q()
+combined_data_U133A="/users/adaemen/Projects/LigandProtease_JPC/Skin/Data_all_filtered.csv"#
+raw_combined_data_U133A=read.table(combined_data_U133A, header=TRUE, na.strings = "NA", sep=",")#
+rownames(raw_combined_data_U133A)=raw_combined_data_U133A[,1]#
+raw_combined_data_U133A=raw_combined_data_U133A[,-1]#
+#
+sample_annotation_U133A="/users/adaemen/Projects/LigandProtease_JPC/Skin/Data_all_clinical.csv"#
+raw_sample_annotation_U133A=read.table(sample_annotation_U133A, header=TRUE, na.strings = "NA", sep=",")#
+rownames(raw_sample_annotation_U133A)=raw_sample_annotation_U133A[,1]#
+raw_sample_annotation_U133A=raw_sample_annotation_U133A[,-1]
+mydist=function(c) {#
+	dist(c,method="euclidian")#
+}#
+myclust=function(c) { #
+	hclust(c,method="average")#
+}#
+#
+# Creation of colorvector#
+datacolors=mat.or.vec(1,dim(raw_combined_data_U133A)[2])#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE1133")]="green"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE2361")]="red"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE2503")]="blue"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE3189")]="yellow"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE4587")]="black"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE7553")]="grey"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE19234")]="cyan"#
+datacolors[which(raw_sample_annotation_U133A[1,]=="GSE22138")]="brown"#
+#
+tissuecolors=mat.or.vec(1,dim(raw_combined_data_U133A)[2])#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="normal_skin")]="green"#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="Nevus")]="red"#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="Melanoma")]="blue"#
+tissuecolors[which(raw_sample_annotation_U133A[2,]=="metastatic MEL")]="yellow"
+tissuecolors
+library("gplots")#
+heatmap.2(as.matrix(log2(raw_combined_data_U133A)), hclustfun=myclust, distfun=mydist, na.rm = TRUE, symbreaks=FALSE, key=TRUE, symkey=TRUE, density.info="none", trace="none", ColSideColors=datacolors, col=rev(heat.colors(100)))
+heatmap.2(as.matrix(log2(raw_combined_data_U133A)), hclustfun=myclust, distfun=mydist, na.rm = TRUE, symbreaks=FALSE, key=TRUE, symkey=TRUE, density.info="none", trace="none", ColSideColors=tissuecolors, col=rev(heat.colors(100)))
+q()
+library(aroma.affymetrix)
+library(aroma.cn)
+source("http://aroma-project.org/hbLite.R")
+install.package(aroma.cn)
+install.packages(aroma.cn)
+library(gData)
+source("http://aroma-project.org/hbLite.R")
+hbInstall("aroma.cn")
+source("http://aroma-project.org/hbLite.R")
+hbInstall("aroma.affymetrix")
+library(aroma.affymetrix)
+library(aroma.cn)
+install.packages("gdata")
+library(gdata)
+library(DNAcopy)
+library(CNTools)
+library(Biobase)
+library(affy)
+library(randomForest)
+setwd('/users/adaemen/Dropbox/drug_predictors/Rscripts/Rtoolbox/')
+source('DrugResponseToolbox.R')
+getwd()
+PatientID="FullCombination_text"
+PatientID="FullCombination_test"
+AffyCELfile="U133A_test_tumor.CEL"
+Methfile="NA"
+SNPCELfile="NA"
+AffyCELfile_clean=gsub("_",x=AffyCELfile,replacement="\\\\_")#Escapes "_" in CELfile names#
+Methfile_clean=gsub("_",x=Methfile,replacement="\\\\_")#Escapes "_" in CELfile names
+SNPCELfile_clean=gsub("_",x=SNPCELfile,replacement="\\\\_")#Escapes "_" in CELfile names#
+#
+if (Methfile=='NA'&SNPCELfile=='NA') {DataCombi=1} else #U133A#
+if (AffyCELfile=='NA'&SNPCELfile=='NA') {DataCombi=2} else #Methylation#
+if (AffyCELfile=='NA'&Methfile=='NA') {DataCombi=3} else #SNP6#
+if (SNPCELfile=='NA') {DataCombi=4} else #U133A+meth#
+if (Methfile=='NA') {DataCombi=5} else #U133A+SNP6#
+if (AffyCELfile=='NA') {DataCombi=6} else #meth+SNP6#
+{DataCombi=7} #U133A+meth+SNP6
+path='/Users/adaemen/Dropbox/drug_predictors/Rscripts/Rtoolbox/'#
+#path='C:/Users/Obi/Documents/My Dropbox/drug_predictors/Rscripts/Rtoolbox/'#
+#
+setwd(path)#
+pathPatientFiles='TumorData/'
+DataCombi
+if (DataCombi==1|DataCombi==4|DataCombi==5|DataCombi==7) {#
+	affy.data1=ReadAffy(filenames=paste(pathPatientFiles,AffyCELfile,sep=""))#
+	setwd('CoreCELfiles/')#
+	affy.data2=ReadAffy()#
+	# Combine tumor CEL file and cell line CEL files#
+	affy.data=merge(affy.data1,affy.data2)#
+	rma.standard.data=rma(affy.data)#
+	exprSet=exprs(rma.standard.data)#
+	#
+	# Conversion of probe sets to genes (selection of most varying probe according to the cell line panel)#
+	GeneProbeMapping.rma=read.table(paste(path,'ExtraFiles/Neve_AffyRMA_gene_maxvarprobe_mapping_stringent.txt',sep=""),header=TRUE)#
+	data.U133A=exprSet[as.vector(GeneProbeMapping.rma[,2]),]#
+	data.U133A=as.data.frame(data.U133A[,1])#
+	rownames(data.U133A)=paste('U133A__',as.vector(GeneProbeMapping.rma[,1]),sep="")#
+	colnames(data.U133A)=PatientID#
+	setwd(path)#
+}
+setwd(paste(path,'Results/',sep=""))#
+#
+### Testing of best predictor per drug compound on tumor sample (best predictor defined upon the inputed data combination) for set of 91 drug compounds#
+drugs_interest=read.table(paste(path,'ExtraFiles/DrugCompounds.txt',sep=""),header=TRUE,sep="\t")#
+predictor_perf = data.frame(cbind(drugs_interest, Model=NA, DataCombination=NA, Score=NA, Probability=NA, Sensitivity=NA), stringsAsFactors=FALSE)#
+rownames(predictor_perf)=drugs_interest[[1]]
+predictor_perf
+drugs_interest
+drugs_interest=drugs_interest[c(1:5)]
+drugs_interest=drugs_interest[c(1,2,3,4,5)]
+drugs_interest=drugs_interest[c(1,2,3,4,5),]
+drugs_interest
+predictor_perf = data.frame(cbind(drugs_interest, Model=NA, DataCombination=NA, Score=NA, Probability=NA, Sensitivity=NA), stringsAsFactors=FALSE)#
+rownames(predictor_perf)=drugs_interest[[1]]
+predictor_perf
+drugs_interest[1]
+drugs_interest[[1]]
+drugs_interest=read.table(paste(path,'ExtraFiles/DrugCompounds.txt',sep=""),header=TRUE,sep="\t")
+drugs_interest=as.data.frame(drugs_interest[c(1,2,3,4,5),])
+drugs_interest
+predictor_perf = data.frame(cbind(drugs_interest, Model=NA, DataCombination=NA, Score=NA, Probability=NA, Sensitivity=NA), stringsAsFactors=FALSE)#
+rownames(predictor_perf)=drugs_interest[[1]]#
+#
+### Mapping table with best predictor per drug compound
+predictor_perf
+predictor_perf[1,"Probability"]=0.7
+predictor_perf
+predictor_perf[2,"Probability"]=0.6
+predictor_perf[3,"Probability"]=0.8
+predictor_perf[4,"Probability"]=0.9
+predictor_perf[5,"Probability"]=0.3
+predictor_perf[5,"Score"]=324
+predictor_perf[4,"Score"]=312
+predictor_perf[3,"Score"]=300
+predictor_perf[2,"Score"]=269
+predictor_perf[1,"Score"]=369
+predictor_perf
+predictor_perf2=predictor_perf
+order(predictor_perf[,"Probability"])
+order(predictor_perf[,"Probability"],"descend")
+?order
+order(predictor_perf[,"Probability"],decreasing=TRUE)
+iter=order(predictor_perf[,"Probability"],decreasing=TRUE)
+iter
+predictor_perf[iter,]
+q()
